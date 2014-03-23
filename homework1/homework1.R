@@ -1,4 +1,5 @@
-library(ggplot2) 
+library(ggplot2)
+library(RColorBrewer)
 data(movies) 
 data(EuStockMarkets)
 
@@ -27,7 +28,7 @@ movies1$budget_MM <- movies1$budget / 1000000
 scatterplot <- ggplot(movies1,
                       aes(x=budget_MM, y=rating, color=genre)) + 
                 geom_point(alpha=.8) +
-#                 ggtitle("US Economic Time Series") +
+                ggtitle("Budget and Rating of Movies") +
                 xlab("Budget (in million)") + 
                 ylab("Rating") 
 
@@ -38,28 +39,30 @@ ggsave(file = "hw1-scatter.png", plot = scatterplot, width = 8, height = 6)
 movies2 <- movies
 Count <- rle(sort(movies2$genre))
 movies2$Count <- Count[[1]][match(movies2$genre, Count[[2]])]
-
-barchart <- ggplot(movies,
-                   aes(x=genre, y=count)) + 
-            geom_bar(stat="identity") +
+movies3 <- movies2[!duplicated(movies2[c("genre" , "Count")]), c("genre" , "Count")]
+movies3 <- movies3[order(movies3$Count, decreasing=TRUE), ]
+genretext <- movies3$genre
+barchart <- ggplot(movies3,
+                   aes(x=genre, y=Count)) + 
+            geom_bar(stat="identity", width=0.7, fill="#CC79A7") +
             ggtitle("Number of Movies Per Genre") +
             xlab("Genre") + 
-            ylab("Count")
+            ylab("Count") +
+            scale_x_discrete(limits=genretext)
 
 print(barchart)
 ggsave(file = "hw1-bar.png", plot = barchart, width = 8, height = 6)
 
 
 # Plot 3: Small Multiples.
-genretext <- unique(movies1$genre)
 multiples <- ggplot(movies1,
                     aes(x=budget_MM, y=rating, color=genre))+ 
-              geom_point(alpha=.5) +
-#               ggtitle("US Economic Time Series") +
+              geom_point(alpha=.8, size=1.2) +
+              ggtitle("Budget and Rating of Movies Per Genre") +
               xlab("Budget (in million)") + 
               ylab("Rating") +
-              scale_x_discrete(label=genretext) +
-              facet_wrap(~ genre, ncol=3)
+              facet_wrap(~ genre, ncol=3) +
+              labs(colour="Genre")
 
 print(multiples)
 ggsave(file = "hw1-multiples.png", plot = multiples, width = 8, height = 6)
@@ -78,11 +81,11 @@ multiline <- ggplot(new_eu,
                     aes(x=time, y=price,
                         group=factor(index),
                         color=factor(index))) + 
-              geom_line() +
+              geom_line(size=0.6) +
               ggtitle("Time Series of Stock Market Prices for 4 indexes") +
               xlab("Time") + 
               ylab("Price") +
-              labs(colour="Index")
+              labs(colour="Index") 
 
 print(multiline)
 ggsave(file = "hw1-multiline.png", plot = multiline, width = 8, height = 6)

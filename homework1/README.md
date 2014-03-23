@@ -11,34 +11,38 @@ The following packages must be installed prior to running this code:
 
 - `ggplot2`
 - `devtools`
-- `plyr`
 
 To run this code, please enter the following commands in R:
 
 ```
 library(devtools)
-source_url("https://raw.github.com/sjengle/msan622/template/homework0/anscombe.r")
+source_url("https://raw.githubusercontent.com/katherinez22/msan622-1/master/homework1/homework1.R")
 ```
 
-This will generate 1 image and some text output. See below for details.
+This will generate 4 images. See below for details.
 
 ## Discussion ##
 
-First, notice that many of the simple statistics for these four series are the same:
+- **First, I produced a scatter plot from the movies dataset, where `budget` is shown on the x-axis and `rating` is shown on the y-aixs:
 
-```R
-> print(stats)
-  group mean_x   mean_y var_x    var_y correlation lm_intercept lm_x_effect
-1     1      9 7.500909    11 4.127269   0.8164205     3.000091   0.5000909
-2     2      9 7.500909    11 4.127629   0.8162365     3.000909   0.5000000
-3     3      9 7.500000    11 4.122620   0.8162867     3.002455   0.4997273
-4     4      9 7.500909    11 4.123249   0.8165214     3.001727   0.4999091
-```
+![IMAGE](hw1-scatter.png)
 
-However, when we plot these four series as scatterplots with trend lines, we can see they each have a distinct pattern:
+In order to have a good scale of the dollar amount showing on x-axis, I divided the `budget` column in movies dataset by 1,000,000 and showed the `budget` in million dollar. Also, I colored the scatters by genre to show the budget and rating for movies in various genre. This part is not required, but I tried to explore the parameters in `ggplot` function. Finally, I added the `alpha=.8` in `geom_point()` to increase the transparency of the points and make the points look softer. 
 
-![IMAGE](anscombe_quartet.png)
+- **Second, I counted the number of different categories in the genre column and showed the results as a bar chart:
 
-While this is a simple (and contrived) example, it does help motivate how visualization can help us quickly see patterns in data.
+![IMAGE](hw1-bar.png)
 
+In order to order plot the count per genre in a descending order, I created a variable `genretext` to store the genre names by the number of count in each genre. Then, I used `scale_x_discrete(limits=genretext)` to make the genre names on the x-axis to sort as a decending number of count. To beautify the graph, I adjusted the width and color of the bars using `width=0.7` and `fill="#CC79A7"`, respectively. 
 
+- **Third, I produced a small-multiples scatterplot, where `budget` is shown on the x-axis and `rating` is shown on the y-aixs:
+
+![IMAGE](hw1-multiples.png)
+
+In order to plot the `budget` and `rating` of movies per `genre`, I used `facet_wrap(~ genre, ncol=3)` where `ncol=3` will plot 9 subcharts in 3 columns. Then, I used `alpha=.8` in `geom_pint()` function to increase the transparency of the points and used `size=1.2` in `geom_pint()` function to control the size of points. Furthermore, I used `labs(colour="Genre")` to change the legend title to Genre. 
+
+- **Fourth, I produced a multi-line chart from `eu` dataset with time shown on the x-aix and `price` on the y-axis:
+
+![IMAGE](hw1-multiline.png)
+
+After converting values in `time` column into year, I created a new data frame with three columns to store the `price` and `time` for each `index`. Then, I grouped the prices and colored the lines using `group=factor(index)` and `color=factor(index)` in the `aes()`, respectively. Finally, I changed the size of lines using `size=0.6` in `geom_line()` function and changed the title of legend using `labs(colour="Index")`.
