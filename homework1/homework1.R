@@ -30,10 +30,9 @@ scatterplot <- ggplot(movies1,
                 geom_point(alpha=.8) +
                 ggtitle("Budget and Rating of Movies") +
                 xlab("Budget (in million)") + 
-                ylab("Rating") 
-
-print(scatterplot)
-ggsave(file = "hw1-scatter.png", plot = scatterplot, width = 8, height = 6)
+                ylab("Rating") +
+                theme(text=element_text(family="Georgia", face="italic"))
+ggsave(file="hw1-scatter.png", plot=scatterplot, width=8, height=6)
 
 # Plot 2: Bar Chart.
 movies2 <- movies
@@ -48,10 +47,9 @@ barchart <- ggplot(movies3,
             ggtitle("Number of Movies Per Genre") +
             xlab("Genre") + 
             ylab("Count") +
-            scale_x_discrete(limits=genretext)
-
-print(barchart)
-ggsave(file = "hw1-bar.png", plot = barchart, width = 8, height = 6)
+            scale_x_discrete(limits=genretext) +
+            theme(text=element_text(family="Georgia", face="italic"))
+ggsave(file="hw1-bar.png", plot=barchart, width=8, height=6)
 
 
 # Plot 3: Small Multiples.
@@ -62,10 +60,9 @@ multiples <- ggplot(movies1,
               xlab("Budget (in million)") + 
               ylab("Rating") +
               facet_wrap(~ genre, ncol=3) +
-              labs(colour="Genre")
-
-print(multiples)
-ggsave(file = "hw1-multiples.png", plot = multiples, width = 8, height = 6)
+              labs(colour="Genre") +
+              theme(text=element_text(family="Georgia", face="italic"))
+ggsave(file="hw1-multiples.png", plot=multiples, width=8, height=6)
 
 
 # Plot 4: Multi-Line Chart.
@@ -85,10 +82,9 @@ multiline <- ggplot(new_eu,
               ggtitle("Time Series of Stock Market Prices for 4 indexes") +
               xlab("Time") + 
               ylab("Price") +
-              labs(colour="Index") 
-
-print(multiline)
-ggsave(file = "hw1-multiline.png", plot = multiline, width = 8, height = 6)
+              labs(colour="Index") +
+              theme(text=element_text(family="Georgia", face="italic"))
+ggsave(file="hw1-multiline.png", plot=multiline, width=8, height=6)
 
 
 
