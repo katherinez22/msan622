@@ -1,10 +1,10 @@
 MSAN 622 Data Visualization
 ==============================
 
-| **Name**  | [YOUR NAME] |
+| **Name**  | Katherine Zhao |
 |----------:|:------------|
-| **Email** | [USERNAME]@dons.usfca.edu |
+| **Email** | mzhao12@dons.usfca.edu |
 
 ## About Me ##
 
-[BIO: Fill in a brief bio about yourself here. Keep it between 1 and 3 sentences.]
+I am a student in MSAN program and want to learn how to create beautiful graphs in this class. For more information about me, please check my LinkedIn page: http://www.linkedin.com/in/katherinezhao22/.
