@@ -16,7 +16,7 @@ To run this code, please enter the following commands in R:
 
 ```
 library(devtools)
-source_url("https://raw.githubusercontent.com/katherinez22/msan622-1/master/homework1/homework1.R")
+source_url("https://raw.githubusercontent.com/katherinez22/msan622/master/homework1/homework1.R")
 ```
 
 This will generate 4 images. See below for details.
