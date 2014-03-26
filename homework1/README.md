@@ -29,11 +29,11 @@ This will generate 4 images. See below for details.
 
 In order to have a good scale of the dollar amount showing on x-axis, I divided the `budget` column in movies dataset by 1,000,000 and showed the `budget` in million dollar. Also, I colored the scatters by genre to show the budget and rating for movies in various genre. This part is not required, but I tried to explore the parameters in `ggplot` function. Finally, I added the `alpha=.8` in `geom_point()` to increase the transparency of the points and make the points look softer. 
 
-- Second, I counted the number of different categories in the genre column and showed the results as a bar chart:
+- Second, I counted the number of movies in different genre categories and showed the results as a bar chart:
 
 ![IMAGE](hw1-bar.png)
 
-In order to order plot the count per genre in a descending order, I created a variable `genretext` to store the genre names by the number of count in each genre. Then, I used `scale_x_discrete(limits=genretext)` to make the genre names on the x-axis to sort as a decending number of count. To beautify the graph, I adjusted the width and color of the bars using `width=0.7` and `fill="#CC79A7"`, respectively. 
+In order to order plot the count per genre in a descending order, I created a new data frame to sort the `genre` column by number of movies in each category and stored the unique sorted genre names in a variable called `genretext`. Then, I used `scale_x_discrete(limits=genretext)` to make the genre names on the x-axis to sort as a decending number of count. To beautify the graph, I adjusted the width and color of the bars using `width=0.7` and `fill="#CC79A7"`, respectively. 
 
 - Third, I produced a small-multiples scatterplot, where `budget` is shown on the x-axis and `rating` is shown on the y-aixs:
 
