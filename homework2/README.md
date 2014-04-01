@@ -1,9 +1,9 @@
 Homework 2: Interactivity
 ==============================
 
-| **Name**  | [YOUR NAME]  |
+| **Name**  | Katherine Zhao  |
 |----------:|:-------------|
-| **Email** | [USERNAME]@dons.usfca.edu |
+| **Email** | mzhao12@dons.usfca.edu |
 
 ## Instructions ##
 
@@ -16,7 +16,7 @@ To run this code, please enter the following commands in R:
 
 ```
 library(shiny)
-shiny::runGitHub('msan622', '[USERNAME]', 'homework2')
+shiny::runGitHub('msan622', 'katherinez22', 'homework2')
 ```
 
 This will start the `shiny` app. See below for details on how to interact with the visualization.
