@@ -42,18 +42,6 @@ million_formatter <- function(x) {
 getPlot <- function(localFrame, mpaaRating, movieGenres, colorScheme, dotSize, dotAlpha) {
   
   # Filter the data.
-#   if (mpaaRating == "All") {
-#     localFrame <- localFrame
-#   }
-#   else {
-#     localFrame <- localFrame[which(localFrame$mpaa == mpaaRating),]
-#   }
-#   if (length(movieGenres) == 0) {
-#     localFrame <- localFrame
-#   }
-#   else {
-#     localFrame <- localFrame[which(localFrame$genre == movieGenres),]
-#   }
   if (mpaaRating == "All" && length(movieGenres) == 0) {
     localFrame <- localFrame
   }
