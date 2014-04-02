@@ -53,7 +53,7 @@ and `axis.title.y` in the `theme()` function.
 
 * Third, changed the font of legend text and table to italic using `legend.text` and `legend.title` in the `theme()` function, respectively. Also, moved the position of legend to the bottom of the plot using `theme(legend.position = "bottom")`.
 
-* Fourth, created a tab panel to count the number of movies with different `MPAA Raint` and `Movie Genres` combination.
+* Fourth, created a tab panel to count the number of movies with different `MPAA Raint` and `Movie Genres` combinations.
 
 * Fifth, added a download link to allow users downloading the source code from a GitHub page. 
 
