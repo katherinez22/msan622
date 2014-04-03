@@ -83,15 +83,15 @@ getPlot <- function(localFrame, mpaaRating, movieGenres, colorScheme, dotSize, d
       theme(axis.title.y = element_text(size = rel(1.2))) +
       theme(legend.title = element_text(size = rel(1.2), face = "italic")) +
       theme(legend.text = element_text(face = "italic")) +
-      theme(legend.position = "bottom")
+      theme(legend.position = "bottom") 
     
     # Select color palette.
     if (colorScheme == "Default") {
-      localPlot <- localPlot
+      localPlot <- localPlot + scale_colour_discrete(limits = levels(factor(localFrame$mpaa)))
     }
     else {
       localPlot <- localPlot +
-        scale_color_brewer(palette = colorScheme)
+        scale_color_brewer(palette = colorScheme, limits = levels(factor(localFrame$mpaa)))
     }
     return(localPlot)
   }

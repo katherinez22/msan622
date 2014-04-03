@@ -48,12 +48,13 @@ A few customizations were added for this visualization:
 
 * First, removed the major panel grid on x-axis and y-axis using `panel.grid.major.x` and `panel.grid.major.y` in the `theme()` function, respectively. 
 
-* Second, increased the sizes of axices texts and labels to 1.2 times using `axis.text.x`, `axis.text.y`, `axis.title.x`, 
-and `axis.title.y` in the `theme()` function.
+* Second, increased the sizes of axises texts and labels to 1.2 times using `axis.text.x`, `axis.text.y`, `axis.title.x`, and `axis.title.y` in the `theme()` function. This could make the texts and labels of axises easier to read.
 
-* Third, changed the font of legend text and table to italic using `legend.text` and `legend.title` in the `theme()` function, respectively. Also, moved the position of legend to the bottom of the plot using `theme(legend.position = "bottom")`.
+* Third, changed the font of legend text and table to italic using `legend.text` and `legend.title` in the `theme()` function, respectively. Also, moved the position of legend to the bottom of the plot using `theme(legend.position = "bottom")`. 
 
-* Fourth, created a tab panel to count the number of movies with different `MPAA Raint` and `Movie Genres` combinations.
+* Fourth, used to `limits` parameter inside `scale_colour_discrete()` function to keep colors consistent in the plot when filtering out data. When changing the color palette, `limits` parameter can also be used inside `scale_color_brewer()` function to keep colors consistent of filtered data within the selected palette.
 
-* Fifth, added a download link to allow users downloading the source code from a GitHub page. 
+* Fifth, created a tab panel to count the number of movies with different `MPAA Raint` and `Movie Genres` combinations. By choosing multiple `Movie Genres`, the table can output the count of movies for each genre.
+
+* Sixth, added a download link to allow users downloading the source code from a GitHub page. 
 
