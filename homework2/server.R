@@ -64,7 +64,7 @@ getPlot <- function(localFrame, mpaaRating, movieGenres, colorScheme, dotSize, d
   }
   
   if (nrow(localFrame) == 0) {
-    # create an empty plot
+    # create an empty plot.
     localPlot <- ggplot(localFrame) + 
       geom_point() + 
       scale_x_continuous(expand = c(0, 0), label = million_formatter, limits=c(0, 220000000)) +
@@ -100,7 +100,7 @@ getPlot <- function(localFrame, mpaaRating, movieGenres, colorScheme, dotSize, d
       theme(panel.grid.major = element_line(color = "grey90", linetype = 3)) +
       theme(panel.grid.minor = element_blank()) +
       theme(panel.background = element_rect(fill = NA)) +
-      theme(panel.border = element_blank()) + s
+      theme(panel.border = element_blank()) + 
       theme(axis.text = element_text(size = rel(1.2))) +
       theme(axis.title = element_text(size = rel(1.2))) +
       theme(legend.key = element_rect(fill = NA)) +
