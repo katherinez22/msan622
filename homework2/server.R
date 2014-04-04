@@ -29,7 +29,7 @@ loadData <- function() {
   movies$genre[which(count == 1 & movies$Documentary == 1)] = "Documentary"
   movies$genre[which(count == 1 & movies$Romance == 1)] = "Romance"
   movies$genre[which(count == 1 & movies$Short == 1)] = "Short"
-  
+  movies$mpaa <- droplevels(movies$mpaa)
   return(movies)
 }
 
@@ -64,77 +64,119 @@ getPlot <- function(localFrame, mpaaRating, movieGenres, colorScheme, dotSize, d
   }
   
   if (nrow(localFrame) == 0) {
-    return("There is no data within this MPAA Rating and Movie Genre combination")
-  }
-  else {
-    # Create base plot.
-    localPlot <- ggplot(localFrame, aes(x = budget, y = rating, color = mpaa)) +
-      geom_point(alpha = dotAlpha, size = dotSize) +
-      scale_x_continuous(expand = c(0, 500), label = million_formatter, limits=c(1000000, 200000000)) +
+    # create an empty plot
+    localPlot <- ggplot(localFrame) + 
+      geom_point() + 
+      scale_x_continuous(expand = c(0, 0), label = million_formatter, limits=c(0, 220000000)) +
       xlab("Budget") + 
       ylab("IMDb Rating") +
       ylim(0.0, 10.0) +
       labs(color="MPAA") +
-      theme(panel.grid.major.x = element_blank()) +
-      theme(panel.grid.major.y = element_blank()) +
+      theme(panel.grid.major = element_line(color = "grey90", linetype = 3)) +
+      theme(panel.grid.minor = element_blank()) +
+      theme(panel.background = element_rect(fill = NA)) +
+      theme(panel.border = element_blank()) + 
+      theme(legend.key = element_rect(fill = NA)) +
       theme(axis.text.x = element_text(size = rel(1.2))) +
       theme(axis.text.y = element_text(size = rel(1.2))) +
       theme(axis.title.x = element_text(size = rel(1.2))) +
       theme(axis.title.y = element_text(size = rel(1.2))) +
       theme(legend.title = element_text(size = rel(1.2), face = "italic")) +
       theme(legend.text = element_text(face = "italic")) +
-      theme(legend.position = "bottom") 
-    
+      theme(legend.direction = "vertical") +
+      theme(legend.justification = c(1, 0)) +
+      theme(legend.position = c(0.9, 0)) +
+      theme(legend.background = element_blank()) 
+  }
+  else {
+    # Create base plot.
+    localPlot <- ggplot(localFrame, aes(x = budget, y = rating, color = mpaa)) +
+      geom_point(alpha = dotAlpha, size = dotSize) +
+      scale_x_continuous(expand = c(0, 0), label = million_formatter, limits=c(0, 220000000)) +
+      xlab("Budget") + 
+      ylab("IMDb Rating") +
+      ylim(0.0, 10.0) +
+      labs(color="MPAA") +
+      theme(panel.grid.major = element_line(color = "grey90", linetype = 3)) +
+      theme(panel.grid.minor = element_blank()) +
+      theme(panel.background = element_rect(fill = NA)) +
+      theme(panel.border = element_blank()) + s
+      theme(axis.text = element_text(size = rel(1.2))) +
+      theme(axis.title = element_text(size = rel(1.2))) +
+      theme(legend.key = element_rect(fill = NA)) +
+      theme(legend.title = element_text(size = rel(1.2), face = "italic")) +
+      theme(legend.text = element_text(face = "italic")) +
+      theme(legend.direction = "vertical") +
+      theme(legend.justification = c(1, 0)) +
+      theme(legend.position = c(0.9, 0)) +
+      theme(legend.background = element_blank()) 
+      
     # Select color palette.
     if (colorScheme == "Default") {
-      localPlot <- localPlot + scale_colour_discrete(limits = levels(factor(localFrame$mpaa)))
+      localPlot <- localPlot + scale_colour_discrete(limits = levels(localFrame$mpaa)) 
     }
     else {
       localPlot <- localPlot +
-        scale_color_brewer(palette = colorScheme, limits = levels(factor(localFrame$mpaa)))
+        scale_color_brewer(type = "qual", palette = colorScheme, limits = levels(localFrame$mpaa))
     }
-    return(localPlot)
   }
+  return(localPlot)
 }
 
 # Create a table function.
 getTable <- function(localFrame, mpaaRating, movieGenres) {
   # Create a new data frame showing the MPAA Raint, Movie Genres and associated Number of Movies
   if (mpaaRating == "All" && length(movieGenres) == 0) {
-    newFrame <- data.frame(matrix(NA, nrow = 1, ncol = 3))
-    colnames(newFrame) <- c("MPAA Rating", "Movie Genre", "Number of Movies")
+    newFrame <- data.frame(matrix(NA, nrow = 1, ncol = 5))
+    colnames(newFrame) <- c("MPAA Rating", "Movie Genre", "Number of Movies", "Minimum Budget", "Maximum Budget")
     newFrame$"MPAA Rating" <- mpaaRating
     newFrame$"Movie Genre" <- "All"
-    newFrame$"Number of Movies" <- nrow(localFrame)
+    newFrame$"Number of Movies" <- formatC(nrow(localFrame), format="d", big.mark=",")
+    newFrame$"Minimum Budget" <- formatC(min(localFrame$budget), format="d", big.mark=",")
+    newFrame$"Maximum Budget" <- formatC(max(localFrame$budget), format="d", big.mark=",")
   }
   else if (mpaaRating == "All" && length(movieGenres) != 0) {
-    newFrame <- data.frame(matrix(NA, nrow = length(movieGenres), ncol = 3))
-    colnames(newFrame) <- c("MPAA Rating", "Movie Genre", "Number of Movies")
+    newFrame <- data.frame(matrix(NA, nrow = length(movieGenres), ncol = 5))
+    colnames(newFrame) <- c("MPAA Rating", "Movie Genre", "Number of Movies", "Minimum Budget", "Maximum Budget")
     newFrame$"MPAA Rating" <- mpaaRating
     newFrame$"Movie Genre" <- movieGenres
     count <- c()
+    min_budget <- c()
+    max_budget <- c()
     for (i in movieGenres) {
       count <- c(count, nrow(localFrame[which(localFrame$genre == i),]))
+      min_budget <- c(min_budget, min(localFrame[which(localFrame$genre == i), "budget"]))
+      max_budget <- c(max_budget, max(localFrame[which(localFrame$genre == i), "budget"]))
     }
-    newFrame$"Number of Movies" <- count
+    newFrame$"Number of Movies" <- formatC(count, format="d", big.mark=",")
+    newFrame$"Minimum Budget" <- formatC(min_budget, format="d", big.mark=",")
+    newFrame$"Maximum Budget" <- formatC(max_budget, format="d", big.mark=",")
   }
   else if (mpaaRating != "All" && length(movieGenres) == 0) {
-    newFrame <- data.frame(matrix(NA, nrow = 1, ncol = 3))
-    colnames(newFrame) <- c("MPAA Rating", "Movie Genre", "Number of Movies")
+    newFrame <- data.frame(matrix(NA, nrow = 1, ncol = 5))
+    colnames(newFrame) <- c("MPAA Rating", "Movie Genre", "Number of Movies", "Minimum Budget", "Maximum Budget")
     newFrame$"MPAA Rating" <- mpaaRating
     newFrame$"Movie Genre" <- "All"
-    newFrame$"Number of Movies" <- nrow(localFrame[which(localFrame$mpaa == mpaaRating),])
+    newFrame$"Number of Movies" <- formatC(nrow(localFrame[which(localFrame$mpaa == mpaaRating),]), format="d", big.mark=",")
+    newFrame$"Minimum Budget" <- formatC(min(localFrame[which(localFrame$mpaa == mpaaRating), "budget"]), format="d", big.mark=",")
+    newFrame$"Maximum Budget" <- formatC(max(localFrame[which(localFrame$mpaa == mpaaRating), "budget"]), format="d", big.mark=",")
   }
   else if (mpaaRating != "All" && length(movieGenres) != 0) {
-    newFrame <- data.frame(matrix(NA, nrow = length(movieGenres), ncol = 3))
-    colnames(newFrame) <- c("MPAA Rating", "Movie Genre", "Number of Movies")
+    newFrame <- data.frame(matrix(NA, nrow = length(movieGenres), ncol = 5))
+    colnames(newFrame) <- c("MPAA Rating", "Movie Genre", "Number of Movies", "Minimum Budget", "Maximum Budget")
     newFrame$"MPAA Rating" <- mpaaRating
     newFrame$"Movie Genre" <- movieGenres
     count <- c()
+    min_budget <- c()
+    max_budget <- c()
     for (i in movieGenres) {
       count <- c(count, nrow(localFrame[which(localFrame$mpaa == mpaaRating & localFrame$genre == i),]))
+      min_budget <- c(min_budget, min(localFrame[which(localFrame$mpaa == mpaaRating & localFrame$genre == i), "budget"]))
+      max_budget <- c(max_budget, max(localFrame[which(localFrame$mpaa == mpaaRating & localFrame$genre == i), "budget"]))
     }
-    newFrame$"Number of Movies" <- count
+    newFrame$"Number of Movies" <- formatC(count, format="d", big.mark=",")
+    newFrame$"Minimum Budget" <- formatC(min_budget, format="d", big.mark=",")
+    newFrame$"Maximum Budget" <- formatC(max_budget, format="d", big.mark=",")
   }
   return(newFrame)
 }
@@ -170,7 +212,6 @@ shinyServer(function(input, output) {
            "Pastel2" = "Pastel2"
     )
   })
-    
 
   # Output filtered scatter plot.
   # Should update every time sort or color criteria changes.

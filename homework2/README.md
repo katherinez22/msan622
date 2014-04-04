@@ -46,15 +46,15 @@ To interact with the visualization, please follow the steps.
 ### * Customization
 A few customizations were added for this visualization:
 
-* First, removed the major panel grid on x-axis and y-axis using `panel.grid.major.x` and `panel.grid.major.y` in the `theme()` function, respectively. 
+* First, modifying the panel in the `theme()` function. Removed the minor panel grid on both x-axis and y-axis using `panel.grid.minor`. Changed the major panel grid to dot-line with grey color using `panel.grid.major = element_line(color = "grey90", linetype = 3)`. Removed the background color using `panel.background`. Also, removed the panel border using `panel.border`.
 
-* Second, increased the sizes of axises texts and labels to 1.2 times using `axis.text.x`, `axis.text.y`, `axis.title.x`, and `axis.title.y` in the `theme()` function. This could make the texts and labels of axises easier to read.
+* Second, modifying the axises in the `theme()` function. Increased the sizes of axises texts and labels to 1.2 times using `axis.text = element_text(size = rel(1.2))` and `axis.title = element_text(size = rel(1.2))`, respectively. This makes the texts and labels of axises easier to read.
 
-* Third, changed the font of legend text and table to italic using `legend.text` and `legend.title` in the `theme()` function, respectively. Also, moved the position of legend to the bottom of the plot using `theme(legend.position = "bottom")`. 
+* Third, modifying the legend in the `theme()` function. Removed background of legend and background underneath legend keys using `legend.background` and `legend.key`, respectively. Changed the font of legend text and label to italic using `legend.text` and `legend.title`, respectively. Layout of items in legends vertically using `legend.direction`. Also, adjusted the position of legend to the lower right corner of the plot using `legend.justification` and `legend.position`. 
 
 * Fourth, used to `limits` parameter inside `scale_colour_discrete()` function to keep colors consistent in the plot when filtering out data. When changing the color palette, `limits` parameter can also be used inside `scale_color_brewer()` function to keep colors consistent of filtered data within the selected palette.
 
-* Fifth, created a tab panel to count the number of movies with different `MPAA Raint` and `Movie Genres` combinations. By choosing multiple `Movie Genres`, the table can output the count of movies for each genre.
+* Fifth, created a tab panel to output basic statistics of the data, including the number of movies, minimum budget and maximum budget with different `MPAA Raint` and `Movie Genres` combinations. By choosing multiple values in `Movie Genres`, the table could output the count and budget information for each genre.
 
 * Sixth, added a download link to allow users downloading the source code from a GitHub page. 
 

@@ -76,7 +76,7 @@ shinyUI(
                                             height = "600px")),
         
         # Add a tab for displaying the table (will be sorted).
-        tabPanel("Table", tableOutput("table"))
+        tabPanel("Statistic Table", tableOutput("table"))
       )
     )  
   )
