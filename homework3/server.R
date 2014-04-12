@@ -34,11 +34,10 @@ getBubble <- function(localFrame, reaction, region) {
       (localFrame$Region %in% region)
   )
   print(indices)
-  # Create two subsets, one for the reactioned localFrame, and another for those to be greyed out
+  # Create two subsets
   localFrameSub <- localFrame[indices,]
   localFrameUnsub <- localFrame[-indices,]
-  
-  # Cannot use negative indices for empty set
+
   if (length(indices) == 0) {
     localFrameUnsub <- localFrame
   }
@@ -77,7 +76,7 @@ getBubble <- function(localFrame, reaction, region) {
     hcl(h=seq(15, 375, length=colorLevels+1), l=65, c=100)[1:n]
   }
   
-  # Create the top-level colour palettes
+  # Create the color palettes
   colorLevels <- length(levels(localFrame$Region))
   if (palette == "Default") {
     cols <- ggColor(colorLevels)
@@ -87,7 +86,7 @@ getBubble <- function(localFrame, reaction, region) {
   
   # Subset palette for those data points to be reactioned
   cols <- cols[which(levels(localFrame$Region) %in% region)]
-  # Draw the greyed-out points first, with the reactioned ones on top
+  # Draw the greyed points
   if (nrow(localFrameUnsub) != 0) { 
     p_bubble <- p_bubble + geom_point(data=localFrameUnsub, position = "jitter", color='grey80', alpha=alpha)
   }
@@ -118,11 +117,9 @@ getMultiples <- function(localFrame, reaction, region) {
       (localFrame$HS.Grad >= hsGrad[1] & localFrame$HS.Grad <= hsGrad[2]) &
       (localFrame$Region %in% region)
   )
-  # Create two subsets, one for the reactioned localFrame, and another for those to be greyed out
   localFrameSub <- localFrame[indices,]
   localFrameUnsub <- localFrame[-indices,]
   
-  # Cannot use negative indices for empty set
   if (length(indices) == 0) {
     localFrameUnsub <- localFrame
   }
@@ -132,7 +129,7 @@ getMultiples <- function(localFrame, reaction, region) {
     hcl(h=seq(15, 375, length=colorLevels+1), l=65, c=100)[1:n]
   }
   
-  # Create the top-level colour palettes
+  # Create the color palettes
   colorLevels <- length(levels(localFrame$Region))
   if (palette == "Default") {
     cols <- ggColor(colorLevels)
@@ -142,9 +139,8 @@ getMultiples <- function(localFrame, reaction, region) {
   
   # Subset palette for those data points to be reactioned
   cols <- cols[which(levels(localFrame$Region) %in% region)]
-  # Draw the greyed-out points first, with the reactioned ones on top
+
   if (nrow(localFrameUnsub) != 0) {
-    #     p_multiples <- p_multiples + geom_point(data=localFrameUnsub, position = "jitter", color='grey80', alpha=alpha)
     p_multiples <- ggpairs(localFrameUnsub, 
                            # Columns to include in the matrix
                            columns = 1:6,
@@ -225,11 +221,10 @@ getParallel <- function(localFrame, reaction, region) {
                      (localFrame$Region %in% region)
   ) # end_indices
   
-  # Create two subsets, one for the reactioned localFrame, and another for those to be greyed out
+  # Create two subsets
   localFrameSub <- localFrame[indices,]
   localFrameUnsub <- localFrame[-indices,]
   
-  # Cannot use negative indices for empty set
   if (length(indices) == 0) {
     localFrameUnsub <- localFrame
   }
@@ -239,7 +234,7 @@ getParallel <- function(localFrame, reaction, region) {
     hcl(h=seq(15, 375, length=colorLevels+1), l=65, c=100)[1:n]
   }
   
-  # Create the top-level colour palettes
+  # Create the color palettes
   colorLevels <- length(levels(localFrame$Region))
   if (palette == "Default") {
     cols <- ggColor(colorLevels)
@@ -249,7 +244,6 @@ getParallel <- function(localFrame, reaction, region) {
   
   # Subset palette for those data points to be reactioned
   cols <- cols[which(levels(localFrame$Region) %in% region)]
-  # Draw the greyed-out points first, with the reactioned ones on top
   if (nrow(localFrameUnsub) != 0) {
     p_parallel <- ggparcoord(data = localFrameUnsub,         
                              # Which columns to use in the plot
