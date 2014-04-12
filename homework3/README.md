@@ -32,26 +32,24 @@ By using different color for each region, the plot shows the wealth vs. health w
 
 ![technique1](technique1.png)
 
-[DISCUSSION]
 
 ### Technique 2: Scatter Matrix ###
 
 This plot shows the scatter matrix of 6 variables: Populatio, Income, Illiteracy, Life Expectancy, Murder and High School Graduation Rate. 
 
-By using different color for each region, the plot allows audience to explore the relationship between variables within each region. 
+By using different color for each region, the plot allows audience to explore the relationship between variables and find out some interesting insights within each region. These insights also help us with setting initial hypothesis for further analysis.
 
 ![technique2](technique2.png)
 
-[DISCUSSION]
 
-### Technique 3: [TYPE] ###
+### Technique 3: Parallel Coordinates Plot ###
+
+This plot shows the data from each state as one line and the trends of data between different variables. Here, 6 variables, Populatio, Income, Illiteracy, Life Expectancy, Murder and High School Graduation Rate, are selected.
 
 ![technique3](technique3.png)
 
-[DISCUSSION]
 
 ### Interactivity ###
 
 ![screenshot](screenshot.png)
 
-[DISCUSSION]
