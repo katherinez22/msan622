@@ -51,5 +51,7 @@ This plot shows the data from each state as one line and the trends of data betw
 
 ### Interactivity ###
 
+By choosing different value ranges of 6 vairables, the three techniques will plot subsets of data. Also, by selecting different regions, the graphs will only show the plots of corresponding region. In addition, `Transparancy` controls both transparancy of dots and transparancy of lines. 
+
 ![screenshot](screenshot.png)
 
