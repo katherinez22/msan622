@@ -33,7 +33,6 @@ getBubble <- function(localFrame, reaction, region) {
       (localFrame$HS.Grad >= hsGrad[1] & localFrame$HS.Grad <= hsGrad[2]) &
       (localFrame$Region %in% region)
   )
-  print(indices)
   # Create two subsets
   localFrameSub <- localFrame[indices,]
   localFrameUnsub <- localFrame[-indices,]
