@@ -1,14 +1,57 @@
-Homework [#]: [HOMEWORK NAME]
+Homework 3: Multivariate
 ==============================
 
-| **Name**  | [YOUR NAME]  |
+| **Name**  | Katherine Zhao  |
 |----------:|:-------------|
-| **Email** | [USERNAME]@dons.usfca.edu |
+| **Email** | mzhao12@dons.usfca.edu |
 
 ## Instructions ##
 
-[INSTRUCTIONS: Include instructions on how to run your code.]
+The following packages must be installed prior to running this code:
+
+- `ggplot2`
+- `shiny`
+- `GGally`
+
+To run this code, please enter the following commands in R:
+
+```
+library(shiny)
+shiny::runGitHub('msan622', 'katherinez22', subdir = 'homework3')
+```
+
+This will start the `shiny` app. See below for details on how to interact with the visualization.
 
 ## Discussion ##
 
-[DISCUSSION: Include a discussion here if required by the assignment.]
+### Technique 1: Bubble Plot ###
+
+This plot shows the wealth and health of the United States. x-axis is the income per capita in dollars and y-axis is the life expectancy in years. 
+
+By using different color for each region, the plot shows the wealth vs. health within each region. In addition, bubble size represents the size of population. In general, Bubble Plot is a good technique to use and it also shows how income and life expectancy are effected by the sizes of population. 
+
+![technique1](technique1.png)
+
+[DISCUSSION]
+
+### Technique 2: Scatter Matrix ###
+
+This plot shows the scatter matrix of 6 variables: Populatio, Income, Illiteracy, Life Expectancy, Murder and High School Graduation Rate. 
+
+By using different color for each region, the plot allows audience to explore the relationship between variables within each region. 
+
+![technique2](technique2.png)
+
+[DISCUSSION]
+
+### Technique 3: [TYPE] ###
+
+![technique3](technique3.png)
+
+[DISCUSSION]
+
+### Interactivity ###
+
+![screenshot](screenshot.png)
+
+[DISCUSSION]
