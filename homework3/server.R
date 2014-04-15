@@ -33,7 +33,7 @@ getBubble <- function(localFrame, reaction, region) {
       (localFrame$HS.Grad >= hsGrad[1] & localFrame$HS.Grad <= hsGrad[2]) &
       (localFrame$Region %in% region)
   )
-  print(indices)
+#   print(indices)
   # Create two subsets, one for the reactioned localFrame, and another for those to be greyed out
   localFrameSub <- localFrame[indices,]
   localFrameUnsub <- localFrame[-indices,]
