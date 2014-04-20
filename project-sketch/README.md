@@ -40,6 +40,6 @@ I may add more interaction techniques in my graphs and will explore them when pl
 Planned Interface
 ------------------------------
 
-![IMAGE](interface.png)
+![IMAGE](interface.JPG)
 
 
