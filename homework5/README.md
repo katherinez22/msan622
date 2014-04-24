@@ -28,7 +28,7 @@ This will start the `shiny` app. See below for details on how to interact with t
 
 In this homework, I chose to implement Option 2: Interactive with brushing form of interactivity. Two techiniques I chose are line plot and stacked area plot. 
 
-In this visualization, I tried to visualize the number of death over time when people sit in different places in the car. By having `drivers`, `front`, and `rear` columns in my original data, I can visulize the time series for `Drivers killed`, `Front-seat passengers killed`, and `Rear-seat passengers killed`, respectively.
+In this visualization, I tried to visualize the number of deaths over time when people sit in different places in the car. By having `drivers`, `front`, and `rear` columns in my original data, I can visulize the time series for `Drivers killed`, `Front-seat passengers killed`, and `Rear-seat passengers killed`, respectively.
 
 ### Interactivity ###
 
@@ -42,3 +42,6 @@ By viewing the time series in line plot above, we can see there are very steady 
 
 By viewing the stacked area plot, we can see the number of drivers killed is the largest proportion of the total number of people deaths in car accidents. Also, we can find rear seats seem to be more safe than other seats in a car. 
 
+### Customization ###
+
+In both plots, I adjusted various parameters in the theme, such as `legend.direction`, `legend.position`, `text`, `panel.border` and etc. In order to remove the spaces between year 1984 and 1985, I rescaled the years setting the `limits` in `scale_x_continuous` from 1969 to 1984+0.917. Also, I fixed scale coordinate system to force a specified ratio between the physical representation of data units on the axes using `coord_fixed`.

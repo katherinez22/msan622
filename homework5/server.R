@@ -55,7 +55,7 @@ scale_year <- function(y1, y2) {
 }
 
 
-# Create line chart
+# Create line and stacked area chart
 getPlot <- function(localFrame, reaction) {
   yearRange = reaction$yearRange
   chartType = reaction$chartType
@@ -81,18 +81,12 @@ getPlot <- function(localFrame, reaction) {
   if(dim(df)[1]==0){
     empty<-data.frame(year=0,value=0,label="no data",time=0)
     g<-ggplot(empty)+geom_text(aes(x=time,y=value, label=label),size=20)+
-      theme(panel.background = element_rect(fill="white",colour="black"),
-            panel.grid.major.x = element_line(color="gray",size=0.8,linetype="dotted"),
-            panel.grid.minor.x = element_line(color="gray",size=0.1,linetype="dotted"),
-            panel.grid.major.y = element_line(color="gray",size=0.8,linetype="dotted"),
-            panel.grid.minor.y = element_line(color="gray",size=0.1,linetype="dotted"),
-            axis.title.x = element_blank(),
-            axis.title.y = element_blank())
+      theme_legend()
   }
   else {
     if (chartType == "Line Chart"){
       p <- ggplot(df)
-      p <- p+geom_line(aes(x=time, y=value, col=label))
+      p <- p+geom_line(aes(x=time, y=value, col=label), size=1.15)
       p <- p+scale_y_continuous(labels=comma, limits=c(0, 2700))
       # Select color palette.
       if(colorScheme != "Default") {
