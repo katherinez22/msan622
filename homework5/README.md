@@ -34,11 +34,11 @@ In this visualization, I tried to visualize the number of deaths over time when 
 
 In the shiny app, users can choose the time frame which they would like to see the time series of the data. To do so, just simply slide the bar of `Year Range`. `Chart Type` allows users to switch between the line plot and stacked area plot. By choosing different `Death Type`, users can view the time series of people killed when sitting in the various places in a car. Users can also view the plots with different color scheme by selecting one color in the `Color Scheme`. Lastly, users can download the source code by clicking on the `download source`.
 
-![Interactivity](line.png)
+![Interactivity](lines.png)
 
 By viewing the time series in line plot above, we can see there are very steady time series of three death types in every year. A peak can be found at the end of each year during the holiday season. Also, the number of deaths in the car accidents starts increasing in the second half of a year, especially in the winter. By comparing the shapes of the time series of three death types, we can find they have similar shapes. 
 
-![Interactivity](area.png)
+![Interactivity](areas.png)
 
 By viewing the stacked area plot, we can see the number of drivers killed is the largest proportion of the total number of people deaths in car accidents. Also, we can find rear seats seem to be more safe than other seats in a car. 
 
