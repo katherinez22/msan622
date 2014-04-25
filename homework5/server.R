@@ -33,22 +33,22 @@ theme_legend <- function() {
       panel.background = element_rect(fill = NA),
       panel.grid.minor = element_blank(),
       panel.grid.major = element_line(color = "grey80", linetype = 3),
-#       panel.grid.major = element_blank(),
+      #       panel.grid.major = element_blank(),
       axis.ticks.x = element_blank()
     )
   )
 }
 
 # Scale the year to remove the space between 1984 and 1985.
-scale_year <- function(y1, y2) {
+scale_year <- function() {
   return(
     scale_x_continuous(
       name = "Year",
       # using 1980 will result in gap
-      limits = c(y1, y2+0.917),
+      limits = c(1969, 1984.917),
       expand = c(0, 0),
       # still want 1980 at end of scale
-      breaks = c(seq(y1, y2, 1), y2+0.917),
+      breaks = c(seq(1969, 1984, 1), 1984.917),
       labels = function(x) {ceiling(x)}
     )
   )
@@ -74,19 +74,20 @@ getPlot <- function(localFrame, reaction) {
   colnames(df) <- c("year", "value", "label", "time")
   indices <- which(
     (df$year >= yearRange[1] & df$year <= yearRange[2]) &
-    (df$label %in% deathType)
+      (df$label %in% deathType)
   ) #indices
-  df <- df[indices, ]
-
-  if(dim(df)[1]==0){
+  df1 <- df[indices, ]
+  
+  if(dim(df1)[1]==0){
     empty<-data.frame(year=0,value=0,label="no data",time=0)
-    g<-ggplot(empty)+geom_text(aes(x=time,y=value, label=label),size=20)+
+    g<-ggplot(empty)+geom_text(aes(x=time,y=value,label=label),size=20)+
       theme_legend()
   }
   else {
     if (chartType == "Line Chart"){
       p <- ggplot(df)
-      p <- p+geom_line(aes(x=time, y=value, col=label), size=1.15)
+      p <- p+geom_line(aes(x=time, y=value, group=label), size=1.15, color="grey90")
+      p <- p+geom_line(data=df1, aes(x=time, y=value, col=label), size=1.15)
       p <- p+scale_y_continuous(labels=comma, limits=c(0, 2700))
       # Select color palette.
       if(colorScheme != "Default") {
@@ -95,7 +96,8 @@ getPlot <- function(localFrame, reaction) {
     } #if
     else if (chartType == "Stacked Area Plot"){
       p <- ggplot(df)
-      p <- p+geom_area(aes(x=time, y=value, fill=label, color=label),position="stack")
+      p <- p+geom_area(aes(x=time, y=value, group=label), position="stack", fill="grey90", color="grey90")
+      p <- p+geom_area(data=df1, aes(x=time, y=value, fill=label, color=label), position="stack")
       p <- p+scale_y_continuous(labels=comma, limits=c(0, 4500))
       # Select color palette.
       if(colorScheme != "Default") {
@@ -103,12 +105,11 @@ getPlot <- function(localFrame, reaction) {
         p <- p+scale_color_brewer(type = "qual", palette = colorScheme, limits = levels(df$label))
       } # if
     } #else if
-    
     # make it pretty
     p <- p + xlab("Time")
     p <- p + ylab("Death")
     p <- p + theme_legend()
-    p <- p + scale_year(yearRange[1], yearRange[2])
+    p <- p + scale_year()
     p <- p + coord_fixed(ratio = 1 / 600)
   }
   return(p)

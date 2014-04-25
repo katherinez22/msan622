@@ -44,4 +44,4 @@ By viewing the stacked area plot, we can see the number of drivers killed is the
 
 ### Customization ###
 
-In both plots, I adjusted various parameters in the theme, such as `legend.direction`, `legend.position`, `text`, `panel.border` and etc. In order to remove the spaces between year 1984 and 1985, I rescaled the years setting the `limits` in `scale_x_continuous` from 1969 to 1984+0.917. Also, I fixed scale coordinate system to force a specified ratio between the physical representation of data units on the axes using `coord_fixed`.
+In both plots, I adjusted various parameters in the theme, such as `legend.direction`, `legend.position`, `text`, `panel.border` and etc. In order to remove the spaces between year 1984 and 1985, I rescaled the years setting the `limits` in `scale_x_continuous` from 1969 to 1984+0.917. Also, I fixed scale coordinate system to force a specified ratio between the physical representation of data units on the axes using `coord_fixed`. Brushing technique was implemented by drawing grey lines/areas with all the time data as the back ground and then drawing the colored lines/areas for filted data on the top. 
