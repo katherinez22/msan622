@@ -63,11 +63,14 @@ getWordCloud <- function(df, reaction){
   else {sexChoose = "M"}
   if (stateName == "All"){
     indices <- which(df$Year == year & df$Sex == sexChoose)
+    new_df <- df[indices, ]
+    new_df <- aggregate(Number ~ Sex+Year+Name, new_df, sum)
+    cloud_df <- head(new_df[sort.list(new_df$Number, decreasing=TRUE),], wordNumber)
   }
   else {
     indices <- which(df$State == stateName & df$Year == year & df$Sex == sexChoose)
+    cloud_df <- head(df[indices, ][sort.list(df[indices, ]$Number, decreasing=TRUE),], wordNumber)
   }
-  cloud_df <- head(df[indices, ][sort.list(df[indices, ]$Number, decreasing=TRUE),], wordNumber)
   set.seed(375) # to make it reproducibles
   # plot the word cloud
   return(wordcloud(words = cloud_df$Name, freq = cloud_df$Number,
