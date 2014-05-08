@@ -32,7 +32,7 @@ theme_legend <- function() {
 
 d <- read.csv("NamesOf50States.csv")
 new_d <- subset(d, grepl("^Kate", Name))
-indices <- which(new_d$Sex == "F" & new_d$Year == 2012)
+indices <- which(new_d$Sex == "F")
 new_d <- new_d[indices,]
 us_state_map <- map_data('state')
 map_d <- merge(new_d, us_state_map, by = 'region')
@@ -93,40 +93,37 @@ dev.off()
 
 
 
-<<<<<<< HEAD
-# Stacked Area Plot:
-require(ggplot2)
-new_df <- subset(d, grepl("^Kath", Name))
-# indices <- which(new_df$Division == "Pacific" & 
-#                    new_df$Sex == "F")
-# new_df <- new_df[indices, -c(1,3,4)]
-new_df2 <- aggregate(Number ~ Sex+Year+Name, new_df, sum)
-p <- ggplot(new_df2)
-p <- p+geom_area(aes(x=Year, y=Number, fill=Name))
-p <- p+geom_point(aes(x=Year, y=Number, color=Name, size=Number))
-p <- p + facet_wrap(~ State, ncol=3)
-=======
-# Starked Area Plot:
-require(ggplot2)
-new_data <- subset(data, grepl("^Kath", Name))
-indices <- which(new_data$State == "CA" & new_data$Number>100,
-                 new_data$Sex == "F")
-new_data <- new_data[indices, -2]
-new_data <- aggregate(Number ~ Sex+Year+Name, new_data, sum)
-p <- ggplot(new_data)
-p <- p+geom_area(aes(x=Year, y=Number, fill=Name, group=Name, label=Name), 
-                 alpha=0.5, color="white", position="stack"
-                 )
->>>>>>> FETCH_HEAD
-print(p)
-p <- p+scale_y_continuous(labels=comma, limits=c(0, 4500))
-# Select color palette.
-# make it pretty
-p <- p + xlab("Time")
-p <- p + ylab("Death")
-p <- p + theme_legend()
-p <- p + scale_year()
-p <- p + coord_fixed(ratio = 1 / 600)
+# Small multiples:
+d <- read.csv("NamesOf50States.csv")
+indices <- which(d$Division == "Pacific" & d$Sex == "F")
+indices <- which(d$Division == "Pacific")
+new_df <- d[indices, ]
+new_df2 <- aggregate(Number ~ State+Year, d, sum)
 
+# Label formatter for numbers in thousands.
+k_formatter <- function(x) {
+  return(sprintf("%gk", round(x / 1000)))
+}
+theme_legend_small <- function() {
+  return(
+    theme(
+      panel.border = element_blank(),
+      panel.background = element_rect(fill = NA),
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(color = "grey90", linetype = 3),
+      axis.ticks.y = element_blank(), 
+      axis.title = element_text(size = rel(1.2), face = "bold"),
+      strip.background=element_rect(fill="white", size = rel(1.2))
+    )
+  )
+}
+
+ggplot(new_df2, aes(x=Year, y=Number))+
+  geom_path(alpha=0.8, color="#386cb0", size=1.1)+
+  geom_point(alpha=0.9, color="#984ea3", size=1.5)+
+  facet_wrap(~State)+
+  coord_polar(theta = "x", direction = -1) +
+  scale_y_continuous(label = k_formatter) +
+  theme_legend_small()
 
 

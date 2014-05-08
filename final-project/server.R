@@ -19,6 +19,8 @@ theme_legend_map <- function() {
   return(
     theme(
       legend.background = element_blank(),
+      legend.position = c(1, 0.3),
+      legend.justification = c(1, 0.3),
       legend.title = element_text(size=15,face = "bold"),
       legend.text = element_text(size=13),
       panel.border = element_blank(),
@@ -34,6 +36,21 @@ theme_legend_map <- function() {
     )
   )
 }
+
+theme_legend_small <- function() {
+  return(
+    theme(
+      panel.border = element_blank(),
+      panel.background = element_rect(fill = NA),
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(color = "grey90", linetype = 3),
+      axis.ticks.y = element_blank(), 
+      axis.title = element_text(size = rel(1.2), face = "bold"),
+      strip.background=element_rect(fill="white", size = rel(1.2))
+    )
+  )
+}
+
 
 # Plot the word cloud
 getWordCloud <- function(df, reaction){
@@ -95,19 +112,41 @@ getMap <- function(df, reaction){
 
 # Get small multiples
 getSmall <- function(df, reaction){
-  nameSearch = capitalize(tolower(reaction$nameSearch))
   division = reaction$division
-  if (reaction$sexChoose == "Female"){
-    sexChoose = "F"
+  if (length(reaction$sexChoose) == 0){
+    if (division == "All") {
+      new_df <- df
+    }
+    else {
+      indices <- which(df$Division == division)
+      new_df <- df[indices, ]
+    }
   }
-  else {sexChoose = "M"}
-  new_df <- subset(df, grepl(nameSearch, Name))
-  indices <- which(new_df$Division == division & new_df$Sex == sexChoose)
-  new_df <- new_df[indices, -c(1,3,4)]
-  new_df2 <- aggregate(Number ~ State+Year+Name, new_df, sum)
-  p <- ggplot(new_df2)
-  p <- p+geom_point(aes(x=Year, y=Number, color=Name, size=Number))
-  p <- p + facet_wrap(~ State, ncol=3)
+  else {
+    if (reaction$sexChoose == "Female"){
+      sexChoose = "F"
+    }
+    else {sexChoose = "M"}
+    if (division == "All") {
+      indices <- which(df$Sex == sexChoose)
+    }
+    else {
+      indices <- which(df$Division == division & df$Sex == sexChoose)
+    }
+    new_df <- df[indices, ]
+  }
+  # Label formatter for numbers in thousands.
+  k_formatter <- function(x) {
+    return(sprintf("%gk", round(x / 1000)))
+  }
+  new_df2 <- aggregate(Number ~ State+Year, new_df, sum)
+  p <- ggplot(new_df2, aes(x=Year, y=Number))
+  p <- p + geom_path(alpha=0.8, color="#386cb0", size=1.2)
+  p <- p + geom_point(alpha=0.9, color="#984ea3", size=1.5)
+  p <- p + scale_y_continuous(name="Number of Baby with Top Names", label = k_formatter)
+  p <- p + facet_wrap(~ State)
+  p <- p + coord_polar(theta = "x", direction = -1)
+  p <- p + theme_legend_small()
   return(p)
 }
 
@@ -168,11 +207,11 @@ shinyServer(function(input, output) {
   }) # getReaction4
   
   # Output Plots.
+  output$wordCloud <- renderPlot({print(getWordCloud(localFrame, getReaction1()))},width=1000,height=800) # output wordCloud
+  output$map <- renderPlot({print(getMap(localFrame, getReaction2()))},width=1200,height=800) # output map
+  output$small <- renderPlot({print(getSmall(localFrame, getReaction3()))},width=1000,height=800) # output areaPlot 
   output$table <- renderDataTable({print(getTable(localFrame, getReaction4()))},
                                   options = list(sPaginationType = "two_button",
                                                  sScrollY = "400px",
                                                  bScrollCollapse = 'true')) # output table
-  output$wordCloud <- renderPlot({print(getWordCloud(localFrame, getReaction1()))},width=1000,height=800) # output wordCloud
-  output$map <- renderPlot({print(getMap(localFrame, getReaction2()))},width=1200,height=800) # output map
-  output$small <- renderPlot({print(getSmall(localFrame, getReaction3()))},width=1000,height=800) # output areaPlot 
-}) # shinyServer
+  }) # shinyServer

@@ -1,10 +1,10 @@
 Final Project
 ==============================
 
-| **Name**  | [YOUR NAME]  |
+| **Name**  | Katherine Zhao  |
 |----------:|:-------------|
-| **Email** | [USERNAME]@dons.usfca.edu |
+| **Email** | mzhao12@dons.usfca.edu |
 
 ## Discussion ##
 
-[DISCUSSION: Include a discussion here if required by the assignment.]
+

@@ -1,29 +1,6 @@
 library(shiny)
 
 shinyUI(navbarPage("Baby Names of 50 States", 
-           tabPanel("Raw Data", sidebarLayout(
-             sidebarPanel(width=3,
-                          textInput("nameSearch4", "Baby Name Search: ", ""),
-                          br(),
-#                           selectInput("stateName4","State Abbreviation: ",
-#                                       c("All", "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD",
-#                                         "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD",
-#                                         "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"),
-#                                       selected="All"),
-#                           br(),
-                          sliderInput("year4", "Year Range:  ", min=2002, max=2012, value=c(2002,2012), step=1, format='####'),
-                          br(), 
-#                           radioButtons("sexChoose4", "Gender:", c("Female", "Male"),
-#                                        selected = c("Female")),
-#                           br(),
-                          # Add a download link
-                          HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/msan622/tree/master/final-project\">download source</a> ]</p>")
-             ), #end of sidebarPanel
-             mainPanel(
-               dataTableOutput("table")
-             ) # end of main panel
-           ) # end of sidebarLayout 
-           ), # end tabpanel
          tabPanel("Word Cloud",sidebarLayout(
                     sidebarPanel(width=3,
                      selectInput("stateName1","State Abbreviation: ",
@@ -72,15 +49,13 @@ shinyUI(navbarPage("Baby Names of 50 States",
          ), # end tabpanel  
          tabPanel("Small Multiples",sidebarLayout(
            sidebarPanel(width=3,
-                        textInput("nameSearch3", "Baby Name Search: ", ""),
-                        br(),
                         selectInput("division3", "State Division:", 
-                                     c("New England","Middle Atlantic","South Atlantic","East South Central",
+                                     c("All","New England","Middle Atlantic","South Atlantic","East South Central",
                                        "West South Central","East North Central","West North Central","Mountain","Pacific"),
-                                      selected = c("Pacific")),
+                                      selected = c("All")),
                         br(),
-                        radioButtons("sexChoose3", "Gender:", c("Female", "Male"),
-                                     selected = c("Female")),
+                        checkboxGroupInput("sexChoose3", "Gender:", c("Female", "Male"),
+                                     selected = c("Female", "Male")),
                         br(),
                         # Add a download link
                         HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/msan622/tree/master/final-project\">download source</a> ]</p>")
@@ -89,6 +64,20 @@ shinyUI(navbarPage("Baby Names of 50 States",
              plotOutput("small",width="100%",height="100%")
            ) # end of main panel
          ) # end of sidebarLayout 
-         ) # end tabpanel     
+         ), # end tabpanel
+         tabPanel("Raw Data", sidebarLayout(
+           sidebarPanel(width=3,
+                        textInput("nameSearch4", "Baby Name Search: ", ""),
+                        br(),
+                        sliderInput("year4", "Year Range:  ", min=2002, max=2012, value=c(2002,2012), step=1, format='####'),
+                        br(), 
+                        # Add a download link
+                        HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/msan622/tree/master/final-project\">download source</a> ]</p>")
+           ), #end of sidebarPanel
+           mainPanel(
+             dataTableOutput("table")
+           ) # end of main panel
+         ) # end of sidebarLayout 
+         ) # end tabpanel
 )# end navbar page
 ) #end shiny UI
