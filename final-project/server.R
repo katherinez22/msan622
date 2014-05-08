@@ -43,7 +43,7 @@ theme_legend_small <- function() {
       panel.border = element_blank(),
       panel.background = element_rect(fill = NA),
       panel.grid.minor = element_blank(),
-      panel.grid.major = element_line(color = "grey90", linetype = 3),
+      panel.grid.major = element_line(color = "grey70", linetype = 3),
       axis.ticks.y = element_blank(), 
       axis.title = element_text(size = rel(1.2), face = "bold"),
       strip.background=element_rect(fill="white", size = rel(1.2))
