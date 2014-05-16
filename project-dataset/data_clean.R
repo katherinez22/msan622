@@ -1,4 +1,3 @@
-setwd("~/GitHub/msan622/project-dataset/namesbystate")
 library(plyr)
 require(ggmap)
 require(maptools)
